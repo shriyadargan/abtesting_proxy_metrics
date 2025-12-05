@@ -95,20 +95,26 @@ jupyter notebook
 | JIVE | 0.248 | -0.8% | 45.3s |
 | LIML | 0.252 | +0.8% | 0.2s |
 
-**Key Insight**: With 10K users per experiment and ρ=0.7 noise correlation, naive OLS overestimates β by 56%! TC correction reduces bias to just 1%.
+**Key Insight**: With 10K users per experiment and ρ=0.7 noise correlation, naive OLS overestimates β by 56%! TC correction reduces bias to just 1% (From the paper).
+
+Business Implication: The sophisticated methods (TC, JIVE, LIML) become critical when:
+
+ - You can't afford large experiments (cost, time, or risk constraints)
+ - Treatment effects are subtle (common for mature products)
+ - Metrics have high **user-level correlation** (engagement metrics typically do e.g.  users with a higher click-through rate ( a short term metric S) also tend to have a higher retention (longer-term metric Y)). There are many confounders between S and Y — many of which one can never reliably observe and control for in an experimentation. The reason for this is correlated measurement error — if S and Y are positively correlated in the population, then treatment arms that happen to have more users with high S will also have more users with high Y.
 
 ## Methods Explained
 
 ### 1. Naive OLS (Baseline)
 - **Approach**: Simple regression of estimated effects
 - **Problem**: Biased when noise is correlated
-- **When to use**: Never in production (educational only)
+- **When to use**: Not in production, but for educational only
 
 ### 2. Total Covariance (TC) - **Moderate Computation**
 - **Approach**: Subtract noise contribution from observed covariance
 - **Formula**: `Λ_true = Σ_observed - (4/n) × Ω`
 - **Pros**: Fast, robust to direct effects
-- **Cons**: Requires estimating Ω
+- **Cons**: Requires estimating Ω (correlated measurement error_ assumed to be the same across experiments (homogeneous covariances)
 
 ### 3. Jackknife IV (JIVE)
 - **Approach**: Leave-one-out correlation
@@ -118,7 +124,7 @@ jupyter notebook
 ### 4. LIML
 - **Approach**: Transform to isotropic noise, find smallest eigenvector
 - **Pros**: Most efficient when assumptions hold
-- **Cons**: Assumes full mediation (no direct effects)
+- **Cons**: Assumes full mediation (no direct effects between the treatment and Y). LIML is highly sensitive to assumption that S fully mediates all treatment effects on Y.Thus, TC and JIVE are recommended for industry applications. 
 
 ## 📝 Notebook Walkthrough
 
