@@ -190,7 +190,7 @@ This methodology is valuable for:
 
 ## References
 
-1. Bibaut et al. (2024). "Learning the Covariance of Treatment Effects Across Many Weak Experiments." KDD 2024.
+1. Bibaut et al. (2024). "Learning the Covariance of Treatment Effects Across Many Weak Experiments." KDD 2024. Blog post: https://netflixtechblog.com/improve-your-next-experiment-by-learning-better-proxy-metrics-from-past-experiments-64c786c2a3ac 
 2. Angrist et al. (1999). "Jackknife Instrumental Variables Estimation."
 3. Stock & Yogo (2005). "Testing for Weak Instruments in IV Regression."
 
